@@ -21,12 +21,16 @@ Unified Vision-Language Model Inference APIs
 
 
 ## 设计思路
-采取策略模式，设计抽象接口EvalInterface，包含eval方法。eval方法可以完成纯文本、单张图片、多张图片统一推理。为各家模型提供具体实现类，如InternVL2模型封装为InternVL2ForEval，实现EvalInterface接口。
+1. 采取策略模式，设计抽象接口EvalInterface，包含抽象方法eval和其他常用方法比如加载图片。eval方法可以完成单样本情况下的纯文本、单张图片、多张图片的统一推理。其他常用方法由于继承关系，可以在子类中进行重写。
+2. 为各家模型提供具体实现类，如将InternVL2模型封装为InternVL2ForEval，实现EvalInterface接口。
 ```python
 from abc import ABC, abstractmethod
 
 class EvalInterface(ABC):
     @abstractmethod
     def eval(self, query = None, imgs = None):
+        pass
+    
+    def load_img(self, img_url):
         pass
 ```
