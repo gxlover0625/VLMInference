@@ -9,8 +9,8 @@ Unified Vision-Language Model Inference APIs
 - 单样本（batch size = 1）
   
 ### 局限性
-- 未统一实现batch inference接口，只能通过for循环+单样本推理，部分模型存在浪费显存的情况
-- 少样本测试（1K），主要用于技术选型，不能部署于生成环境
+- 未统一实现batch inference接口，只能自行通过for循环+单样本推理实现，部分模型存在浪费显存的情况
+- 只适用于技术选型，在少样本上进行测试（1K），不能部署于生成环境
 - 不同模型依赖不同，需要为不同模型创建不同的conda环境
   
 ### 硬件要求
