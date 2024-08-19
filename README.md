@@ -47,13 +47,13 @@ model_path = ""
 evaluator = InternVL2ForEval(model_path)
 
 # 纯文本推理
-evaluator.eval(query = "你好")
+print(evaluator.eval(query = "你好"))
 
 # 单张图片推理，传递url或者本地路径
-evaluator.eval(query = "请问图片描述了什么？", imgs = "url/path")
+print(evaluator.eval(query = "请问图片描述了什么？", imgs = "url/path"))
 
 # 多张图片推理
-evaluator.eval(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"])
+print(evaluator.eval(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"]))
 ```
 
 
