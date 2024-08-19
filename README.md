@@ -9,7 +9,7 @@ Unified Vision-Language Model Inference APIs
 - 单样本（batch size = 1）
   
 ### 局限性
-- 未统一实现batch inference接口，只能自行通过for循环+单样本推理实现，部分模型存在浪费显存的情况
+- 未统一实现batch inference接口，只能自行通过for循环+单样本推理实现，部分模型存在浪费显存的情况，推理速度慢
 - 只适用于技术选型，在少样本上进行测试（1K），不能部署于生成环境
 - 不同模型依赖不同，需要为不同模型创建不同的conda环境
   
@@ -17,8 +17,6 @@ Unified Vision-Language Model Inference APIs
 在不考虑量化的情况下，torch.float16和torch.bfloat16是最为主流的推理精度。在模型大小为7B或8B的情况下，模型本身就需要占用14G或16G显存，建议使用16G以上的消费级显卡如RTX 3090、RTX 4090，在条件支持的情况下可以选择32G的V100，40G的A100或80G的A100。
 
 本项目开发环境中主要有80G的A100和32G的V100，因此会优先支持这两块显卡。
-
-
 
 ## 设计思路
 1. 采取策略模式，设计抽象接口EvalInterface，包含抽象方法eval和其他常用方法比如加载图片。eval方法可以完成单样本情况下的纯文本、单张图片、多张图片的统一推理。其他常用方法由于继承关系，可以在子类中进行重写。
