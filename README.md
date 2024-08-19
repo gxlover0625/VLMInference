@@ -18,6 +18,11 @@ Unified Vision-Language Model Inference APIs
 
 本项目开发环境中主要有80G的A100和32G的V100，因此会优先支持这两块显卡。
 
+## 模型支持
+| 模型系列 | 模型大小 | 推理框架 | 显存要求 | 模型权重 | 环境配置 |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| InternVL2 | 8B | LMDeploy | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) |
+
 ## 设计思路
 1. 采取策略模式，设计抽象接口EvalInterface，包含抽象方法eval和其他常用方法比如加载图片。eval方法可以完成单样本情况下的纯文本、单张图片、多张图片的统一推理。其他常用方法由于继承关系，可以在子类中进行重写。
 2. 为各家模型提供具体实现类，如将InternVL2模型封装为InternVL2ForEval，实现EvalInterface接口。
