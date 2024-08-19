@@ -20,6 +20,9 @@ Unified Vision-Language Model Inference APIs
 
 本项目开发环境中主要有80G的A100和32G的V100，因此会优先支持这两块显卡。
 
+## :dart: 更新日志
+[24/08/19] 我们更新了InternVL2-8B的推理API。
+
 ## 模型支持
 优先支持[司南大模型排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的模型。
 
@@ -41,6 +44,25 @@ modelscope download --model=model_name --local_dir local_dir
 
 ## 快速开始
 以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
+```bash
+# 安装InternVL、LMDeploy环境
+git clone https://github.com/OpenGVLab/InternVL.git
+cd InternVL
+conda create -n internvl python=3.9 -y
+conda activate internvl
+pip install -r requirements.txt
+pip install lmdeploy
+
+# 下载模型
+export HF_ENDPOINT=https://hf-mirror.com
+huggingface-cli download --resume-download OpenGVLab/InternVL2-8B --local-dir ./weights
+
+# 克隆本项目
+cd ../
+git clone https://github.com/gxlover0625/VLMInference.git
+cd VLMInference
+```
+下面是推理的代码
 ```python
 from vlminference.models import InternVL2ForEval
 
