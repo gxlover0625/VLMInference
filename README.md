@@ -19,6 +19,17 @@ Unified Vision-Language Model Inference APIs
 本项目开发环境中主要有80G的A100和32G的V100，因此会优先支持这两块显卡。
 
 ## 模型支持
+服务器无法直接连接huggingface的话，建议使用[huggingface镜像网站](https://hf-mirror.com/)或者[modelscope](https://www.modelscope.cn/home)下载权重。这里以linux系统为例，展示两种下载方式的脚本
+```bash
+# huggingface镜像下载，请自行修改model_name和local_dir
+pip install -U huggingface_hub
+export HF_ENDPOINT=https://hf-mirror.com
+huggingface-cli download --resume-download model_name --local-dir local_dir
+
+# modelscope下载，请自行修改model_name和local_dir
+pip install -U modelscope
+modelscope download --model=model_name --local_dir local_dir
+```
 | 模型系列 | 模型大小 | 推理框架 | 显存要求 | 模型权重 | 环境配置 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | InternVL2 | 8B | LMDeploy | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) |
