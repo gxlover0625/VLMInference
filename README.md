@@ -37,6 +37,26 @@ modelscope download --model=model_name --local_dir local_dir
 | InternVL2 | 8B | LMDeploy | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 单样本+纯文本/单图片/多图片 |
 | MiniCPM-V-2.6 | 8B | vLLM | 16G+ | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 单样本+纯文本/单图片/多图片 |
 
+## 快速开始
+以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
+```python
+from vlminference.models import InternVL2ForEval
+
+# 权重路径
+model_path = ""
+evaluator = InternVL2ForEval(model_path)
+
+# 纯文本推理
+evaluator.eval(query = "你好")
+
+# 单张图片推理，传递url或者本地路径
+evaluator.eval(query = "请问图片描述了什么？", imgs = "url/path")
+
+# 多张图片推理
+evaluator.eval(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"])
+```
+
+
 ## 设计思路
 1. 采取策略模式，设计抽象接口EvalInterface，包含抽象方法eval和其他常用方法比如加载图片。eval方法可以完成单样本情况下的纯文本、单张图片、多张图片的统一推理。其他常用方法由于继承关系，可以在子类中进行重写实现自定义。
 2. 为各家模型提供具体实现类，如将InternVL2模型封装为InternVL2ForEval，实现EvalInterface接口。
