@@ -22,6 +22,7 @@ Unified Vision-Language Model Inference APIs
 
 ## :dart: 更新日志
 [24/08/19] 我们更新了InternVL2-8B的推理API。
+[24/08/20]
 
 ## 模型支持
 优先支持[司南大模型排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的模型。
