@@ -149,17 +149,19 @@ class InternVL2ForInferBasic(InferenceEngine):
             prompt = query
             return prompt
         
-        if isinstance(imgs, str) or (isinstance(imgs, list) and len(imgs) == 1):
-            if isinstance(imgs, list):
-                imgs = imgs[0]
+        if isinstance(imgs, list) and len(imgs) == 1:
+            imgs = imgs[0]
+        
+        if isinstance(imgs, str):
             images = self.load_image(imgs, max_num=12).to(torch.bfloat16).cuda()
-            prompt_prefix = f'Image-1: <image>\n'
+            prompt_prefix = f'<image>\n'
             prompt = prompt_prefix + query
             return (prompt, images)
         else:
             images = [self.load_image(img_url, max_num=12).to(torch.bfloat16).cuda() for img_url in imgs]
-            num_patches_list = [img.size(0) for img in images]
+            num_patches_list = [img.shape[0] for img in images]
             images = torch.cat(images, dim=0)
+            
             prompt_prefix = ""
             for i in range(len(images)):
                 prompt_prefix += f'Image-{i+1}: <image>\n'
@@ -173,7 +175,8 @@ class InternVL2ForInferBasic(InferenceEngine):
             response, history = self.model.chat(self.tokenizer, None, inputs, generation_config, history=None, return_history=True)
         else:
             if len(inputs) == 3:
-                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], generation_config ,history=None, return_history=True)
+                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], generation_config, num_patches_list=inputs[2], history=None, return_history=True)
             else:
                 response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], generation_config, history=None, return_history=True)
         return response
+    
