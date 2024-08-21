@@ -41,8 +41,8 @@ class InternVL2ForInfer(InferenceEngine):
         response = self.model(inputs, gen_config = self.gen_config).text
         return response
 
-    def batch_infer(self, query = None, imgs = None):
-        inputs_list = [self.parse_input(query, imgs) for query, imgs in zip(query, imgs)]
+    def batch_infer(self, query_list = None, imgs_list = None):
+        inputs_list = [self.parse_input(query, imgs) for query, imgs in zip(query_list, imgs_list)]
         response_list = self.model(inputs_list, gen_config = self.gen_config)
         response_list = [response.text for response in response_list]
         return response_list
