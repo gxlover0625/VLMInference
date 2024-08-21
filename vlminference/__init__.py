@@ -1,5 +1,5 @@
-from .evaluator import EvalInterface
+from .inference import InferenceEngine
 
 __all__ = [
-    "EvalInterface"
+    "InferenceEngine"
 ]

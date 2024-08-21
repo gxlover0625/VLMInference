@@ -2,9 +2,9 @@ from lmdeploy import pipeline, TurbomindEngineConfig, ChatTemplateConfig, Genera
 from lmdeploy.vl import load_image
 from lmdeploy.vl.constants import IMAGE_TOKEN
 
-from ..evaluator import EvalInterface
+from ..inference import InferenceEngine
 
-class InternVL2ForEval(EvalInterface):
+class InternVL2ForInfer(InferenceEngine):
     def __init__(self, model_path = None, system_prompt = None, context_max_len = 8192, max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
         if system_prompt is None:
@@ -16,14 +16,15 @@ class InternVL2ForEval(EvalInterface):
     
     def load_image(self, img_url):
         return load_image(img_url)
-
-    def eval(self, query = None, imgs = None):
-        # 无图片
+    
+    def parse_input(self, query = None, imgs = None):
         if imgs is None:
-            response = self.model.chat(query, gen_config=self.gen_config).response.text
-
-        # 有图片
+            prompt = query
+            return prompt
         else:
+            if isinstance(imgs, list) and len(imgs) == 1:
+                imgs = imgs[0]
+
             if isinstance(imgs, list):
                 images = [self.load_image(img_url) for img_url in imgs]
                 prompt_prefix = ""
@@ -33,9 +34,15 @@ class InternVL2ForEval(EvalInterface):
             else:
                 images = self.load_image(imgs)
                 prompt = query
+            return (prompt, imgs)
 
-            response = self.model.chat((prompt, images), gen_config=self.gen_config).response.text
-
-        if len(response) == 0:
-            raise Exception("Out of context max tokens, please try to shorten the context")
+    def infer(self, query = None, imgs = None):
+        inputs = self.parse_input(query, imgs)
+        response = self.model(inputs, gen_config = self.gen_config).text
         return response
+
+    def batch_infer(self, query = None, imgs = None):
+        inputs_list = [self.parse_input(query, imgs) for query, imgs in zip(query, imgs)]
+        response_list = self.model(inputs_list, gen_config = self.gen_config)
+        response_list = [response.text for response in response_list]
+        return response_list

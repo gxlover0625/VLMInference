@@ -1,5 +1,5 @@
-from .internvl2 import InternVL2ForEval
+from .internvl2 import InternVL2ForInfer
 
 __all__ = [
-    "InternVL2ForEval",
+    "InternVL2ForInfer",
 ]

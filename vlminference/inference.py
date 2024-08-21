@@ -4,9 +4,13 @@ from abc import ABC, abstractmethod
 from io import BytesIO
 from PIL import Image
 
-class EvalInterface(ABC):
+class InferenceEngine(ABC):
     @abstractmethod
-    def eval(self, query = None, imgs = None):
+    def parse_input(self, query = None, imgs = None):
+        pass
+
+    @abstractmethod
+    def infer(self, query = None, imgs = None):
         pass
 
     def load_image(self, img_url, mode = "RGB"):
