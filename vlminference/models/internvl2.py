@@ -59,7 +59,7 @@ class InternVL2ForInfer(InferenceEngine):
 class InternVL2ForInferBasic(InferenceEngine):
     IMAGENET_MEAN = (0.485, 0.456, 0.406)
     IMAGENET_STD = (0.229, 0.224, 0.225)
-    def __init__(self, model_path = None, device = "cuda"):
+    def __init__(self, model_path = None, device = "cuda", max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
 
         major, minor = torch.cuda.get_device_capability()
@@ -70,6 +70,14 @@ class InternVL2ForInferBasic(InferenceEngine):
             self.torch_dtype = torch.bfloat16
         
         self.device = device
+        self.gen_config = {
+            "do_sample": True,
+            "max_new_tokens": max_new_tokens,
+            "top_p": top_p,
+            "top_k": top_k,
+            "temperature": temperature,
+            "repetition_penalty": repetition_penalty
+        }
 
         self.model = AutoModel.from_pretrained(model_path, torch_dtype=self.torch_dtype, low_cpu_mem_usage=True, trust_remote_code=True).eval().to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, use_fast=False)
@@ -181,13 +189,34 @@ class InternVL2ForInferBasic(InferenceEngine):
     
     def infer(self, query = None, imgs = None):
         inputs = self.parse_input(query, imgs)
-        generation_config = dict(max_new_tokens=1024, do_sample=False)
         if imgs is None:
-            response, history = self.model.chat(self.tokenizer, None, inputs, generation_config, history=None, return_history=True)
+            response, history = self.model.chat(self.tokenizer, None, inputs, self.gen_config, history=None, return_history=True)
         else:
             if len(inputs) == 3:
-                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], generation_config, num_patches_list=inputs[2], history=None, return_history=True)
+                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], self.gen_config, num_patches_list=inputs[2], history=None, return_history=True)
             else:
-                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], generation_config, history=None, return_history=True)
+                response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], self.gen_config, history=None, return_history=True)
         return response
     
+    def batch_infer(self, query_list = None, imgs_list = None):
+        if all(imgs is None for imgs in imgs_list):
+            response_list = self.model.batch_chat(self.tokenizer, None, query_list, self.gen_config)
+            raise NotImplementedError("batch_infer for query only is not implemented yet.")
+        
+        new_imgs_list = []
+        for lst in imgs_list:
+            if isinstance(lst, list) and len(lst) == 1:
+                new_imgs_list.append(str(lst[0]))
+            else:
+                new_imgs_list.append(lst)
+        imgs_list = new_imgs_list
+
+        if all(isinstance(imgs, str) for imgs in imgs_list):
+            inputs_list = [self.parse_input(query, imgs) for query, imgs in zip(query_list, imgs_list)]
+            images = [inputs[1] for inputs in inputs_list]
+            num_patches_list = [img.size(0) for img in images]
+            images = torch.cat(images, dim=0)
+            response_list = self.model.batch_chat(self.tokenizer, images, [prompt for (prompt, images) in inputs_list],num_patches_list=num_patches_list,generation_config=self.gen_config)
+            return response_list
+        else:
+            raise NotImplementedError("batch_infer for multiple images is not implemented yet.")
