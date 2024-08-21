@@ -73,9 +73,11 @@ infer_engine = InternVL2ForInfer(model_path)
 
 # 纯文本推理
 print(infer_engine.infer(query = "你好"))
+# >>>你好！请问有什么我可以帮助你的吗？
 
 # 单张图片推理，传递url或者本地路径
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = "url/path"))
+# 
 
 # 多张图片推理
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"]))
