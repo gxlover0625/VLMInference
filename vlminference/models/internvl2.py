@@ -59,8 +59,19 @@ class InternVL2ForInfer(InferenceEngine):
 class InternVL2ForInferBasic(InferenceEngine):
     IMAGENET_MEAN = (0.485, 0.456, 0.406)
     IMAGENET_STD = (0.229, 0.224, 0.225)
-    def __init__(self, model_path = None):
-        self.model = AutoModel.from_pretrained(model_path, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True).eval().cuda()
+    def __init__(self, model_path = None, device = "cuda"):
+        assert model_path is not None, "Please provide model path"
+
+        major, minor = torch.cuda.get_device_capability()
+        compute_capability = major * 10 + minor
+        if compute_capability < 80:
+            self.torch_dtype = torch.float16
+        else:
+            self.torch_dtype = torch.bfloat16
+        
+        self.device = device
+
+        self.model = AutoModel.from_pretrained(model_path, torch_dtype=self.torch_dtype, low_cpu_mem_usage=True, trust_remote_code=True).eval().to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, use_fast=False)
 
     def build_transform(self, input_size):
@@ -153,12 +164,12 @@ class InternVL2ForInferBasic(InferenceEngine):
             imgs = imgs[0]
         
         if isinstance(imgs, str):
-            images = self.load_image(imgs, max_num=12).to(torch.bfloat16).cuda()
+            images = self.load_image(imgs, max_num=12).to(self.torch_dtype).to(self.device)
             prompt_prefix = f'<image>\n'
             prompt = prompt_prefix + query
             return (prompt, images)
         else:
-            images = [self.load_image(img_url, max_num=12).to(torch.bfloat16).cuda() for img_url in imgs]
+            images = [self.load_image(img_url, max_num=12).to(self.torch_dtype).to(self.device) for img_url in imgs]
             num_patches_list = [img.shape[0] for img in images]
             images = torch.cat(images, dim=0)
             
