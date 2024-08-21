@@ -56,7 +56,7 @@ pip install lmdeploy
 
 # 下载模型
 export HF_ENDPOINT=https://hf-mirror.com
-huggingface-cli download --resume-download OpenGVLab/InternVL2-8B --local-dir ./weights
+huggingface-cli download --resume-download OpenGVLab/InternVL2-8B --local-dir ./weights/OpenGVLab/InternVL2-8B
 
 # 克隆本项目
 cd ../
