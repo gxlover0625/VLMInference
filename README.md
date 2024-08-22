@@ -26,7 +26,7 @@ Unified Vision-Language Model Inference APIs
 
 [24/08/21] 更新了不依赖LMDeploy的InternVL-8B的单样本以及批量推理API，但批量推理API只支持单张图片推理，也不支持混合输入。
 
-[24/08/22] todo
+[24/08/22] 更新了MiniCPM-V-2.6的单样本以及批量推理API。
 
 ## 模型支持
 优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的多模大模型。
