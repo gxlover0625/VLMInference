@@ -15,5 +15,10 @@ elif model_env == 'minicpmv':
     __all__ = [
         "MiniCPMVForInfer",
     ]
+elif model_env == "glm4v":
+    from .glm4v import GLM4ForInferAK
+    __all__ = [
+        "GLM4ForInferAK",
+    ]
 else:
     raise ValueError(f"Unknown MODEL_ENV: {model_env}")
