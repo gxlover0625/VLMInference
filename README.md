@@ -5,7 +5,7 @@ Unified Vision-Language Model Inference APIs
 为什么要写这个项目？很大程度上是因为目前主流的视觉语言模型提供的推理API很不一样，哪怕是同一个模型，纯文本、单张图片、多张图片的推理API也存在差异。在我实际工作中，常常要测试不同模型的效果以构建benchmark，众多API难以记住，来回查阅文档也是非常麻烦。因此，我决定创建本项目，将各家模型的推理API进行进一步封装，提供统一、最为方便使用的接口。
 
 ### 适用情景
-- 纯文本、单图片、多图片推理
+- 纯文本、单图片、多图片+单轮对话推理
 - 所有模型单样本推理（batch size = 1）
 - 部分模型批量推理（batch size = N）
   
@@ -15,14 +15,18 @@ Unified Vision-Language Model Inference APIs
 - 不同模型依赖版本不同，需要为不同模型创建不同的conda环境
   
 ### 硬件要求
-在不考虑量化的情况下，torch.float16和torch.bfloat16是最为主流的推理精度。在模型大小为7B或8B的情况下，模型本身就需要占用14G或16G显存，建议使用显存16G以上的消费级显卡如RTX 3090、RTX 4090，在条件支持的情况下可以选择显存32G以上的V100、A100及以上。本项目开发环境中主要有80G的A100、32G的V100、24G的3090，因此会优先支持这三块显卡。
+在不考虑量化的情况下，torch.float16和torch.bfloat16是最为主流的推理精度。在模型大小为7B或8B的情况下，模型本身就需要占用14G或16G显存，建议使用显存16G以上的消费级显卡如RTX 3090、RTX 4090，在条件支持的情况下可以选择显存32G以上的V100、A100及以上。本项目开发环境中主要有80G的A100、32G的V100、24G的3090，因此会优先支持这三种显卡。
 
-建议CUDA驱动更新到12及以上，有些库如vLLM、LMDeploy要求CUDA版本最小为11.8（目前测试CUDA 11.4不能很好支持）。
+建议CUDA版本更新到12及以上，有些库如vLLM、LMDeploy要求CUDA版本最小为11.8。部分模型在安装Flash-Attention能大大提升推理速度，但对显卡架构有要求，V100无法安装Flash-Attention。
 
 ## :dart: 更新日志
-[24/08/19] 我们更新了InternVL2-8B的推理API。
+[24/08/19] 更新了InternVL2-8B的单样本推理API。
 
-[24/08/20] 我们更新了InternVL2-8B的批量推理API，更新了不依赖LMDeploy的InternVL-8B的推理API。
+[24/08/20] 更新了InternVL2-8B的批量推理API，支持混合输入，大大提升速度。
+
+[24/08/21] 更新了不依赖LMDeploy的InternVL-8B的单样本以及批量推理API，但批量推理API只支持单张图片推理，也不支持混合输入。
+
+[24/08/22] todo
 
 ## 模型支持
 优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的多模大模型。
@@ -77,10 +81,13 @@ print(infer_engine.infer(query = "你好"))
 
 # 单张图片推理，传递url或者本地路径
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = "url/path"))
-# 
 
 # 多张图片推理
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"]))
+
+# 批处理推理
+print(infer_engine.infer(query_list = ["你好", "请问图片描述了什么？"], imgs_list = [None,"url2/path2"]))
+```
 ```
 
 
