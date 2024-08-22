@@ -62,12 +62,14 @@ class InternVL2ForInferBasic(InferenceEngine):
     def __init__(self, model_path = None, device = "cuda", max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
 
-        major, minor = torch.cuda.get_device_capability()
-        compute_capability = major * 10 + minor
-        if compute_capability < 80:
-            self.torch_dtype = torch.float16
-        else:
-            self.torch_dtype = torch.bfloat16
+        # major, minor = torch.cuda.get_device_capability()
+        # compute_capability = major * 10 + minor
+        # if compute_capability < 80:
+        #     self.torch_dtype = torch.float16
+        # else:
+        #     self.torch_dtype = torch.bfloat16
+
+        self.torch_dtype = torch.bfloat16
         
         self.device = device
         self.gen_config = {
