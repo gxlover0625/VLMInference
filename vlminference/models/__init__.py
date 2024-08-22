@@ -1,5 +1,5 @@
 from .internvl2 import InternVL2ForInfer, InternVL2ForInferBasic
-from .minicpm import MiniCPMVForInfer
+from .minicpmv import MiniCPMVForInfer
 
 __all__ = [
     "InternVL2ForInfer",
