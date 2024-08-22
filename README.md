@@ -44,8 +44,9 @@ modelscope download --model=model_name --local_dir local_dir
 ```
 | 模型系列 | 模型大小 | 推理框架 | 显存要求 | 模型权重 | 环境配置 | 单样本 | 批量 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| InternVL2 | 8B | LMDeploy | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片  | 纯文本/单图片/多图片/混合 |
+| InternVL2 | 8B | LMDeploy | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
 | MiniCPM-V-2.6 | 8B | vLLM | 16G+ | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
+|GLM-4 | 9B | AccessKey | 28G+ | [GLM-4](https://huggingface.co/THUDM/glm-4v-9b) | [GLM-4](https://github.com/THUDM/GLM-4/blob/main/basic_demo/README.md) | 纯文本/单图片 | / |
 
 ## 快速开始
 以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
