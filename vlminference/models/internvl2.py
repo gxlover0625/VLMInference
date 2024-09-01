@@ -226,6 +226,8 @@ class InternVL2ForInferBasic(InferenceEngine):
                 response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], self.gen_config, num_patches_list=inputs[2], history=None, return_history=True)
             else:
                 response, history = self.model.chat(self.tokenizer, inputs[1], inputs[0], self.gen_config, history=None, return_history=True)
+        del inputs
+        torch.cuda.empty_cache()
         return response
     
     def batch_infer(self, query_list = None, imgs_list = None):
@@ -247,6 +249,8 @@ class InternVL2ForInferBasic(InferenceEngine):
             num_patches_list = [img.size(0) for img in images]
             images = torch.cat(images, dim=0)
             response_list = self.model.batch_chat(self.tokenizer, images, prompts, num_patches_list=num_patches_list, generation_config=self.gen_config)
+            del inputs_list, prompts, num_patches_list, images
+            torch.cuda.empty_cache()
             return response_list
         else:
             raise NotImplementedError("batch_infer for multiple images is not implemented yet.")
