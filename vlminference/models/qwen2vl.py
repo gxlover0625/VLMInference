@@ -88,7 +88,7 @@ class Qwen2VLForInferBasic(InferenceEngine):
         )
         inputs = inputs.to("cuda")
 
-        generated_ids = self.model.generate(**inputs, max_new_tokens=128)
+        generated_ids = self.model.generate(**inputs, **self.gen_config)
         generated_ids_trimmed = [
             out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
         ]
