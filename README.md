@@ -60,10 +60,10 @@ modelscope download --model=model_name --local_dir local_dir
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2，建议CUDA版本大于等于11.8。
 > [!TIP]
-> 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本。通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的cuda版本进行安装。
+> 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本。通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的CUDA版本进行安装。
 
 ## 快速开始
-以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
+以InternVL2-8B为例
 ```bash
 # 安装InternVL、LMDeploy环境
 git clone https://github.com/OpenGVLab/InternVL.git
@@ -80,29 +80,34 @@ huggingface-cli download --resume-download OpenGVLab/InternVL2-8B --local-dir ./
 # 克隆本项目
 cd ../
 git clone https://github.com/gxlover0625/VLMInference.git
-cd VLMInference
 ```
 下面是推理的代码
 ```python
+import os
+import sys
+# 将本项目添加倒工作环境中！
+sys.path.append("本项目路径")
+# 根据vlminference/models/__init__.py中找到对应模型
+os.environ['MODEL_ENV'] = 'internvl2'
 from vlminference.models import InternVL2ForInfer
 
 # 权重路径
-model_path = ""
+model_path = "权重路径"
 infer_engine = InternVL2ForInfer(model_path)
 
 # 纯文本推理
 print(infer_engine.infer(query = "你好"))
 # >>>你好！请问有什么我可以帮助你的吗？
 
-# 单张图片推理，传递url或者本地路径
+# 单张图片推理，传递url或者本地路径，可以用列表包围
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = "url/path"))
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = ["url/path"]))
 
-# 多张图片推理
+# 多张图片推理，传递url或者本地路径，但不能嵌套列表
 print(infer_engine.infer(query = "请问图片描述了什么？", imgs = ["url1/path1", "url2/path2"]))
 
-# 批处理推理
-print(infer_engine.infer(query_list = ["你好", "请问图片描述了什么？"], imgs_list = [None,"url2/path2"]))
+# 批处理推理，如果是纯文本推理，imgs_list对应位置填上None，保持每一对query和imgs的格式满足单样本推理格式。
+print(infer_engine.batch_infer(query_list = ["你好", "请问图片描述了什么？"], imgs_list = [None, "url2/path2"]))
 ```
 
 ## 设计思路
