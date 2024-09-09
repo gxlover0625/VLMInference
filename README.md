@@ -35,7 +35,7 @@ Unified Vision-Language Model Inference APIs
 [24/08/19] 更新了`InternVL2`（lmdeploy）的单样本推理API。
 
 ## 模型支持
-优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的多模大模型。
+优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、10B以内、位次前列的多模大模型。
 
 如果服务器无法直接连接huggingface的话，建议使用[huggingface镜像网站](https://hf-mirror.com/)或者[modelscope](https://www.modelscope.cn/home)下载权重。这里以linux系统为例，展示两种下载方式的脚本
 ```bash
