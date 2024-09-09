@@ -15,12 +15,10 @@ Unified Vision-Language Model Inference APIs
   
 ### 局限性
 - 不适用于多轮对话推理，不适合部署于生产环境
-- 部分模型的依赖较难安装，如vllm、flash-attention，但其能提高推理速度
+- 部分模型的依赖较难安装，如vllm、flash-attention
   
 ### 硬件要求
-在不考虑量化的情况下，torch.float16和torch.bfloat16是最为主流的推理精度。在模型大小为7B或8B的情况下，模型本身就需要占用14G或16G显存，建议使用显存16G以上的消费级显卡如RTX 3090、RTX 4090，在条件支持的情况下可以选择显存32G以上的V100、A100及以上。本项目开发环境中主要有80G的A100、32G的V100、24G的3090，因此会优先支持这三种显卡。
-
-建议CUDA版本更新到12及以上，有些库如vLLM、LMDeploy要求CUDA版本最小为11.8。部分模型在安装Flash-Attention能大大提升推理速度，但对显卡架构有要求，V100无法安装Flash-Attention。
+本项目优先支持24G以上的显卡，如3090、V100、A100等
 
 ## :dart: 更新日志
 [24/08/19] 更新了InternVL2-8B的单样本推理API。
