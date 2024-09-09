@@ -53,12 +53,14 @@ modelscope download --model=model_name --local_dir local_dir
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [InternVL2](https://huggingface.co/OpenGVLab/InternVL2-8B) | LMDeploy | InternVL2ForInfer | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html)<br> [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | | Transformers | InternVL2ForInferBasic | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :x:纯文本<br> :white_check_mark:单图片<br> :x:多图片<br> :x:混合输 |
-| [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | vLLM | MiniCPMVForInfer | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) <br> [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
+| [MiniCPM-V-2.6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | vLLM | MiniCPMVForInfer | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) <br> [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [GLM-4V](https://open.bigmodel.cn/console/trialcenter?modelCode=glm-4v) | API | GLM4ForInferAK | [zhipuai](https://open.bigmodel.cn/dev/api#glm-4v) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :x:多图片 | / |
 | [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 
 ## 硬件要求
-本项目优先支持24G以上的显卡，如3090、V100、A100等。
+本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2。
+> [!TIP]
+> 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本，通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的cuda版本进行安装。
 
 ## 快速开始
 以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
