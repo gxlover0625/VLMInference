@@ -49,9 +49,9 @@ huggingface-cli download --resume-download model_name --local-dir local_dir
 pip install -U modelscope
 modelscope download --model=model_name --local_dir local_dir
 ```
-| 模型系列 | 模型实现类 | 推理框架 | 模型权重 | 环境配置 | 单样本 | 批量 |
+| 模型系列 | 模型权重 | 推理框架 | 具体实现类 | 环境配置 | 单样本 | 批量 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| InternVL2 | InternVL2ForInfer | LMDeploy | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
+| InternVL2 | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | LMDeploy | InternVL2ForInfer | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | - [x] 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
 | MiniCPM-V-2.6 | 8B | vLLM | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
 |GLM-4V | 9B | AccessKey | [GLM-4V](https://huggingface.co/THUDM/glm-4v-9b) | [GLM-4V](https://github.com/THUDM/GLM-4/blob/main/basic_demo/README.md) | 纯文本/单图片 | / |
 
