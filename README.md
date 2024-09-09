@@ -36,9 +36,7 @@ Unified Vision-Language Model Inference APIs
 
 ## 模型支持
 > [!IMPORTANT]
-> 所有模型均在本项目的vlminference/models目录中
-
-优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、10B以内、位次前列的多模大模型。
+> 所有实现的模型在本项目的vlminference/models目录中，优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、10B以内、位次前列的多模大模型。
 
 如果服务器无法直接连接huggingface的话，建议使用[huggingface镜像网站](https://hf-mirror.com/)或者[modelscope](https://www.modelscope.cn/home)下载权重。这里以linux系统为例，展示两种下载方式的脚本
 ```bash
