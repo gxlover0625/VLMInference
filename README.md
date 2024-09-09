@@ -17,9 +17,6 @@ Unified Vision-Language Model Inference APIs
 - 不适用于多轮对话推理，不适合部署于生产环境
 - 部分模型的依赖较难安装，如vllm、flash-attention
   
-### 硬件要求
-本项目优先支持24G以上的显卡，如3090、V100、A100等
-
 ## :dart: 更新日志
 [24/08/19] 更新了InternVL2-8B的单样本推理API。
 
@@ -32,6 +29,11 @@ Unified Vision-Language Model Inference APIs
 [24/08/23] 更新了GLM-4V的单样本推理API，此版本推理需要去[智谱AI官网](https://open.bigmodel.cn/console/overview)获取access key，不需要下载模型，不需要显卡支持，直接通过http请求推理，官方并不支持多图片推理。
 
 [24/09/01] 更新了InternVL2-8B的多GPU推理功能，解决单卡推理超出显存的问题，但会显著降低推理速度。解决数据类型bug、单次推理一直占用显存bug。
+
+[24/09/09] 更新了Qwen2-VL-7B的单样本以及批量推理API。
+
+## 硬件要求
+本项目优先支持24G以上的显卡，如3090、V100、A100等
 
 ## 模型支持
 优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的多模大模型。
