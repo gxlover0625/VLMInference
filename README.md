@@ -63,6 +63,7 @@ modelscope download --model=model_name --local_dir local_dir
 > 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本。通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的CUDA版本进行安装。
 
 ## 快速开始
+### 基本使用
 以InternVL2-8B为例
 ```bash
 # 安装InternVL、LMDeploy环境
@@ -108,6 +109,29 @@ print(infer_engine.infer(query = "请问图片描述了什么？", imgs = ["url1
 
 # 批处理推理，如果是纯文本推理，imgs_list对应位置填上None，保持每一对query和imgs的格式满足单样本推理格式。
 print(infer_engine.batch_infer(query_list = ["你好", "请问图片描述了什么？"], imgs_list = [None, "url2/path2"]))
+```
+
+### 零代码批量推理
+目前仅支持InternVL2-8B模型，其他模型后续会支持。
+可以修改batch_infer.sh中的参数，主要修改input_file和ouput_file的位置以及模型路径。
+```bash
+cd VLMInference/vlminference/scipts
+./batch_infer.sh
+```
+input_file是json格式，每一行是一个json对象
+```json
+{
+    "id":1, 
+    "query":"请描述图片",
+    "imgs":["url1/path1", "url2/path2"]
+}
+```
+output_file是json格式，每一行是一个json对象
+```json
+{
+    "id":1,
+    "response": ""
+}
 ```
 
 ## 设计思路
