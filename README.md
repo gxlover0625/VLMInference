@@ -22,9 +22,9 @@ Unified Vision-Language Model Inference APIs
 
 [24/09/09] 更新了`Qwen2-VL`（transformers）的单样本以及批量推理API。
 
-[24/09/01] 更新了`InternVL2`（transformes、lmdeploy）的多GPU推理功能，解决单卡推理超出显存的问题，但会显著降低推理速度。解决数据类型bug、单次推理一直占用显存bug。
+[24/09/01] 更新了`InternVL2`（transformes、lmdeploy）的多GPU推理功能，解决单卡推理超出显存bug、数据类型bug、单次推理一直占用显存bug。
 
-[24/08/23] 更新了GLM-4V（api）的单样本推理API，此版本推理需要去[智谱AI官网](https://open.bigmodel.cn/console/overview)获取access key，不需要下载模型，不需要显卡支持，直接通过http请求推理，官方并不支持多图片推理。
+[24/08/23] 更新了`GLM-4V`（api）的单样本推理API，需要提前去[智谱AI官网](https://open.bigmodel.cn/console/overview)获取access key，不需要下载模型，不需要显卡支持，直接通过http请求推理，官方并不支持多图片推理。
 
 [24/08/22] 更新了MiniCPM-V-2.6（vllm）的单样本以及批量推理API，支持混合输入。
 
