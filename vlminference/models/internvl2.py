@@ -60,10 +60,9 @@ class InternVL2ForInfer(InferenceEngine):
 class InternVL2ForInferBasic(InferenceEngine):
     IMAGENET_MEAN = (0.485, 0.456, 0.406)
     IMAGENET_STD = (0.229, 0.224, 0.225)
-    def __init__(self, model_path = None, max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
+    def __init__(self, model_path = None, model_name = "InternVL2-8B", max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
 
-        model_name = model_path.split("/")[-1]
         device_map = self.split_model(model_name)
 
         major, minor = torch.cuda.get_device_capability()
