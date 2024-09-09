@@ -118,7 +118,7 @@ print(infer_engine.batch_infer(query_list = ["你好", "请问图片描述了什
 cd VLMInference/vlminference/scipts
 ./batch_infer.sh
 ```
-input_file是json格式，每一行是一个json对象
+input_file是json格式，每一行是一个json对象，格式跟单样本推理一样。
 ```json
 {
     "id":1, 
