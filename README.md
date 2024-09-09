@@ -20,7 +20,7 @@ Unified Vision-Language Model Inference APIs
 ## :dart: 更新日志
 括号内表示推理框架，transformers代表官网原生代码
 
-[24/09/09] 更新了Qwen2-VL（transformers）的单样本以及批量推理API。
+[24/09/09] 更新了`Qwen2-VL`（transformers）的单样本以及批量推理API。
 
 [24/09/01] 更新了InternVL2-8B（原生代码以及lmdeploy）的多GPU推理功能，解决单卡推理超出显存的问题，但会显著降低推理速度。解决数据类型bug、单次推理一直占用显存bug。
 
