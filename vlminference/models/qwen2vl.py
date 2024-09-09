@@ -33,10 +33,10 @@ class Qwen2VLForInferBasic(InferenceEngine):
         #     )
 
         self.model = Qwen2VLForConditionalGeneration.from_pretrained(
-            model_path, torch_dtype="auto", device_map="auto"
+            model_path, torch_dtype=self.torch_dtype, device_map="auto"
         )
-        
         self.processor = AutoProcessor.from_pretrained(model_path)
+        
         self.gen_config = {
             "do_sample": True,
             "max_new_tokens": max_new_tokens,
@@ -75,9 +75,8 @@ class Qwen2VLForInferBasic(InferenceEngine):
     def infer(self, query=None, imgs=None):
         messages = self.parse_input(query, imgs)
         text = self.processor.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
+            messages, tokenize=False, add_generation_prompt=True, add_vision_id=True
         )
-        
         image_inputs, video_inputs = process_vision_info(messages)
         inputs = self.processor(
             text=[text],
@@ -86,7 +85,8 @@ class Qwen2VLForInferBasic(InferenceEngine):
             padding=True,
             return_tensors="pt",
         )
-        inputs = inputs.to("cuda")
+
+        inputs = inputs.to(self.torch_dtype).to("cuda")
 
         generated_ids = self.model.generate(**inputs, **self.gen_config)
         generated_ids_trimmed = [
