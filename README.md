@@ -32,9 +32,6 @@ Unified Vision-Language Model Inference APIs
 
 [24/09/09] 更新了Qwen2-VL-7B的单样本以及批量推理API。
 
-## 硬件要求
-本项目优先支持24G以上的显卡，如3090、V100、A100等
-
 ## 模型支持
 优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、4-10B、位次前列的多模大模型。
 
@@ -54,6 +51,9 @@ modelscope download --model=model_name --local_dir local_dir
 | InternVL2 | 8B | LMDeploy<br/>Transformers | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
 | MiniCPM-V-2.6 | 8B | vLLM | 16G+ | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
 |GLM-4V | 9B | AccessKey | 28G+ | [GLM-4V](https://huggingface.co/THUDM/glm-4v-9b) | [GLM-4V](https://github.com/THUDM/GLM-4/blob/main/basic_demo/README.md) | 纯文本/单图片 | / |
+
+## 硬件要求
+本项目优先支持24G以上的显卡，如3090、V100、A100等。
 
 ## 快速开始
 以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
