@@ -55,6 +55,7 @@ modelscope download --model=model_name --local_dir local_dir
 | | Transformers | InternVL2ForInferBasic | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :x:纯文本<br> :white_check_mark:单图片<br> :x:多图片<br> :x:混合输 |
 | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | vLLM | MiniCPMVForInfer | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) <br> [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [GLM-4V](https://open.bigmodel.cn/console/overview) | API | GLM4ForInferAK | zhipuai | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :x:多图片 | / |
+| [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等。
