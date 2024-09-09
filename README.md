@@ -58,9 +58,9 @@ modelscope download --model=model_name --local_dir local_dir
 | [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 
 ## 硬件要求
-本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2。
+本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2，建议CUDA版本大于等于11.8。
 > [!TIP]
-> 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本，通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的cuda版本进行安装。
+> 如果运行代码时出现内核级错误，请查看是否正确安装pytorch版本。通过`nvcc --version`查看cuda版本，在pytorch官网选择对应的cuda版本进行安装。
 
 ## 快速开始
 以InternVL2-8B为例，请根据`模型支持`这一小节配置好环境以及下载好权重
