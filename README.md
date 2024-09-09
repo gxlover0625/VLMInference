@@ -36,7 +36,7 @@ Unified Vision-Language Model Inference APIs
 
 ## 模型支持
 > [!IMPORTANT]
-> 所有实现的模型在本项目的vlminference/models目录中，优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、10B以内、位次前列的多模大模型。
+> 所有实现的模型在本项目的vlminference/models目录中，优先支持[司南排行榜](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME)中开源、10B以内、位次前列的多模大模型
 
 如果服务器无法直接连接huggingface的话，建议使用[huggingface镜像网站](https://hf-mirror.com/)或者[modelscope](https://www.modelscope.cn/home)下载权重。这里以linux系统为例，展示两种下载方式的脚本
 ```bash
@@ -49,11 +49,13 @@ huggingface-cli download --resume-download model_name --local-dir local_dir
 pip install -U modelscope
 modelscope download --model=model_name --local_dir local_dir
 ```
-| 模型系列 | 模型大小 | 推理框架 | 显存要求 | 模型权重 | 环境配置 | 单样本 | 批量 |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| InternVL2 | 8B | LMDeploy<br/>Transformers | 16G+ | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
-| MiniCPM-V-2.6 | 8B | vLLM | 16G+ | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
-|GLM-4V | 9B | AccessKey | / | [GLM-4V](https://huggingface.co/THUDM/glm-4v-9b) | [GLM-4V](https://github.com/THUDM/GLM-4/blob/main/basic_demo/README.md) | 纯文本/单图片 | / |
+| 模型系列 | 模型实现类 | 推理框架 | 模型权重 | 环境配置 | 单样本 | 批量 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| InternVL2 | InternVL2ForInfer | LMDeploy | [InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B) | [InternVL](https://internvl.readthedocs.io/en/latest/get_started/installation.html) + [LMDeploy](https://lmdeploy.readthedocs.io/en/latest/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
+| MiniCPM-V-2.6 | 8B | vLLM | [MiniCPM-V-2_6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) + [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | 纯文本/单图片/多图片 | 纯文本/单图片/多图片/混合 |
+|GLM-4V | 9B | AccessKey | [GLM-4V](https://huggingface.co/THUDM/glm-4v-9b) | [GLM-4V](https://github.com/THUDM/GLM-4/blob/main/basic_demo/README.md) | 纯文本/单图片 | / |
+
+- [x] 111
 
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等。
