@@ -20,6 +20,8 @@ Unified Vision-Language Model Inference APIs
 ## :dart: 更新日志
 括号内表示推理框架，transformers代表官网原生代码
 
+[24/09/12] 更新了`xGen-MM`(transformers)的单样本、批量推理API，只支持图片混合输入。
+
 [24/09/09] 更新了`Qwen2-VL`（transformers）的单样本、批量推理API，支持混合输入。
 
 [24/09/01] 更新了`InternVL2`（transformes、lmdeploy）的多GPU推理功能，解决单卡推理超出显存bug、数据类型bug、单次推理一直占用显存bug。
@@ -56,6 +58,7 @@ modelscope download --model=model_name --local_dir local_dir
 | [MiniCPM-V-2.6](https://huggingface.co/openbmb/MiniCPM-V-2_6) | vLLM | MiniCPMVForInfer | [MiniCPM-V](https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file#install) <br> [vLLM](https://docs.vllm.ai/en/latest/getting_started/installation.html) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [GLM-4V](https://open.bigmodel.cn/console/trialcenter?modelCode=glm-4v) | API | GLM4ForInferAK | [zhipuai](https://open.bigmodel.cn/dev/api#glm-4v) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :x:多图片 | / |
 | [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
+| [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5) | Transformers | XGenMMForInferBasic | [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5#troubleshoot) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :x:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :x:混合输 |
 
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2，建议CUDA版本大于等于11.8。
