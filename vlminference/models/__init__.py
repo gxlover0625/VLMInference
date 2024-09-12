@@ -30,5 +30,10 @@ elif model_env == "xgenmm":
     __all__ = [
         "XGenMMForInferBasic",
     ]
+elif model_env == "phiv":
+    from .phiv import PhiVForInferBasic
+    __all__ = [
+        "PhiVForInferBasic",
+    ]
 else:
     raise ValueError(f"Unknown MODEL_ENV: {model_env}")
