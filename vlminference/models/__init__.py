@@ -25,5 +25,10 @@ elif model_env == "qwen2vl":
     __all__ = [
         "Qwen2VLForInferBasic",
     ]
+elif model_env == "xgenmm":
+    from .xgenmm import XGenMMForInferBasic
+    __all__ = [
+        "XGenMMForInferBasic",
+    ]
 else:
     raise ValueError(f"Unknown MODEL_ENV: {model_env}")
