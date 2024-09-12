@@ -97,8 +97,8 @@ class Qwen2VLForInferBasic(InferenceEngine):
         )
 
         del inputs
-        gc.collect()
         torch.cuda.empty_cache()
+        gc.collect()
         return response[0]
 
     def batch_infer(self, query_list=None, imgs_list=None):
@@ -126,6 +126,6 @@ class Qwen2VLForInferBasic(InferenceEngine):
         )
 
         del inputs
-        gc.collect()
         torch.cuda.empty_cache()
+        gc.collect()
         return response_list

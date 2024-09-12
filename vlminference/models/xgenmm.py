@@ -9,10 +9,10 @@ from transformers import AutoModelForVision2Seq, AutoTokenizer, AutoImageProcess
 from ..inference import InferenceEngine
 
 class XGenMMForInferBasic(InferenceEngine):
-    def __init__(self, model_path = None, max_new_tokens = 512, top_p = None, top_k = 1, temperature = 0.05, repetition_penalty = 1.0):
+    def __init__(self, model_path = None, max_new_tokens = 512, top_p = None, top_k = None, temperature = 0.05, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
         
-        self.model = AutoModelForVision2Seq.from_pretrained(model_path, trust_remote_code=True).cuda().eval()
+        self.model = AutoModelForVision2Seq.from_pretrained(model_path, trust_remote_code=True).eval().cuda()
         self.image_processor = AutoImageProcessor.from_pretrained(model_path, trust_remote_code=True)
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, use_fast=False, legacy=False)
@@ -55,9 +55,6 @@ class XGenMMForInferBasic(InferenceEngine):
     def parse_input(self, query=None, imgs=None):
         inputs = {}
         if imgs is None:
-            prompt = self.apply_prompt_template(query)
-            language_inputs = self.tokenizer([prompt], return_tensors="pt")
-            inputs.update(language_inputs)
             inputs['pixel_values'] = None
             inputs['image_sizes'] = None
         else:
@@ -74,9 +71,9 @@ class XGenMMForInferBasic(InferenceEngine):
             inputs['pixel_values'] = [image_list]
             inputs['image_sizes'] = [image_sizes]
 
-            prompt = self.apply_prompt_template(query)
-            language_inputs = self.tokenizer([prompt], return_tensors="pt")
-            inputs.update(language_inputs)
+        prompt = self.apply_prompt_template(query)
+        language_inputs = self.tokenizer([prompt], return_tensors="pt")
+        inputs.update(language_inputs)
         
         for name, value in inputs.items():
             if isinstance(value, torch.Tensor):
@@ -92,18 +89,21 @@ class XGenMMForInferBasic(InferenceEngine):
             response = self.tokenizer.decode(generated_text[0][prompt_len:], skip_special_tokens=True)
         else:
             response = self.tokenizer.decode(generated_text[0], skip_special_tokens=True).split("<|end|>")[0]
+        del inputs
+        torch.cuda.empty_cache()
+        gc.collect()
         return response
     
     def batch_infer(self, query_list=None, imgs_list=None):
+        if any(imgs is None for imgs in imgs_list):
+            raise NotImplementedError("Batch inference without images is not supported yet.")
+
         batch_images = []
         batch_image_sizes = []
         batch_prompt = []
         for query, imgs in zip(query_list, imgs_list):
             image_list = []
             image_sizes = []
-
-            if imgs is None:
-                imgs = []
 
             if type(imgs) is str:
                 imgs = [imgs]
@@ -126,12 +126,11 @@ class XGenMMForInferBasic(InferenceEngine):
         language_inputs = {name: tensor.cuda() for name, tensor in language_inputs.items()}
         batch_inputs.update(language_inputs)
 
-        generated_text = self.model.generate(**batch_inputs, image_size=batch_image_sizes,
-                                pad_token_id=self.tokenizer.pad_token_id,
-                                eos_token_id=self.tokenizer.eos_token_id,
-                                do_sample=False, max_new_tokens=768, top_p=None, num_beams=1,
-                                )
-        predictions = self.tokenizer.batch_decode(generated_text, skip_special_tokens=True)
-        return predictions
+        generated_text = self.model.generate(**batch_inputs, image_size=batch_image_sizes, **self.gen_config)
+        response_list = self.tokenizer.batch_decode(generated_text, skip_special_tokens=True)
+        del batch_inputs
+        torch.cuda.empty_cache()
+        gc.collect()
+        return response_list
             
             
