@@ -61,7 +61,7 @@ modelscope download --model=model_name --local_dir local_dir
 | [GLM-4V](https://open.bigmodel.cn/console/trialcenter?modelCode=glm-4v) | API | GLM4ForInferAK | [zhipuai](https://open.bigmodel.cn/dev/api#glm-4v) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :x:多图片 | / |
 | [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5) | Transformers | XGenMMForInferBasic | [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5#troubleshoot) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :x:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
-| [Phi-3.5-Vision](hhttps://huggingface.co/microsoft/Phi-3.5-vision-instruct) | Transformers | PhiVForInferBasic | [Phi-3.5-Vision](https://huggingface.co/microsoft/Phi-3.5-vision-instruct#requirements) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | / |
+| [Phi-3.5-Vision](https://huggingface.co/microsoft/Phi-3.5-vision-instruct#requirements) | Transformers | PhiVForInferBasic | [Phi-3.5-Vision](https://huggingface.co/microsoft/Phi-3.5-vision-instruct#requirements) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | / |
 
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2，建议CUDA版本大于等于11.8。
