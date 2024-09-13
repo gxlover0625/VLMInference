@@ -50,17 +50,21 @@ class LLavaOneVisionForInferBasic(InferenceEngine):
     def parse_input(self, query = None, imgs = None):
         inputs = {}
 
-        if isinstance(imgs, str):
-            imgs = [imgs]
-        
-        imgs = [self.load_image(img) for img in imgs]
-        image_sizes = [image.size for image in imgs]
-        image_tensor = process_images(imgs, self.image_processor, self.model.config)
-        image_tensor = [_image.to(dtype=torch.float16, device="cuda") for _image in image_tensor]
-        
-        question = f"\n{query}"
-        for _ in imgs:
-            question = DEFAULT_IMAGE_TOKEN + question
+        if imgs is None:
+            image_sizes = None
+            image_tensor = None
+        else:
+            if isinstance(imgs, str):
+                imgs = [imgs]
+            
+            imgs = [self.load_image(img) for img in imgs]
+            image_sizes = [image.size for image in imgs]
+            image_tensor = process_images(imgs, self.image_processor, self.model.config)
+            image_tensor = [_image.to(dtype=torch.float16, device="cuda") for _image in image_tensor]
+            
+        question = f"{query}"
+        # for _ in imgs:
+        #     question = DEFAULT_IMAGE_TOKEN + question
         conv_template = "qwen_1_5"
         conv = copy.deepcopy(conv_templates[conv_template])
         conv.append_message(conv.roles[0], question)
@@ -84,4 +88,10 @@ class LLavaOneVisionForInferBasic(InferenceEngine):
             **self.gen_config
         )
         response = self.tokenizer.batch_decode(conversation, skip_special_tokens=True)
+        del input_ids, images, image_sizes
+        torch.cuda.empty_cache()
+        gc.collect()
         return response[0]
+
+    def batch_infer(self, query_list, img_list):
+        raise NotImplementedError("Not implemented yet.")
