@@ -35,5 +35,10 @@ elif model_env == "phiv":
     __all__ = [
         "PhiVForInferBasic",
     ]
+elif model_env == "llava_onevision":
+    from .llava_onevision import LLavaOneVisionForInferBasic
+    __all__ = [
+        "LLavaOneVisionForInferBasic",
+    ]
 else:
     raise ValueError(f"Unknown MODEL_ENV: {model_env}")
