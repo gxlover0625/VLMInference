@@ -2,6 +2,8 @@ import copy
 import gc
 import requests
 import torch
+import warnings
+warnings.filterwarnings("ignore")
 
 from io import BytesIO
 from PIL import Image
@@ -16,9 +18,7 @@ class LLavaOneVisionForInferBasic(InferenceEngine):
     def __init__(self, model_path = None, model_name = "llava_qwen", load_bits = 8, max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
         self.model_path = model_path
-        if load_bits == 4:
-            self.tokenizer, self.model, self.image_processor, self.max_length = load_pretrained_model(model_path, None, model_name, load_4bit=True, device_map="auto")
-        elif load_bits == 8:
+        if load_bits == 8:
             self.tokenizer, self.model, self.image_processor, self.max_length = load_pretrained_model(model_path, None, model_name, load_8bit=True, device_map="auto")
         elif load_bits == 16:
             self.tokenizer, self.model, self.image_processor, self.max_length = load_pretrained_model(model_path, None, model_name, device_map="auto")
@@ -48,16 +48,16 @@ class LLavaOneVisionForInferBasic(InferenceEngine):
         return image
     
     def parse_input(self, query = None, imgs = None):
-        inputs = []
+        inputs = {}
 
         if isinstance(imgs, str):
             imgs = [imgs]
         
         imgs = [self.load_image(img) for img in imgs]
+        image_sizes = [image.size for image in imgs]
         image_tensor = process_images(imgs, self.image_processor, self.model.config)
         image_tensor = [_image.to(dtype=torch.float16, device="cuda") for _image in image_tensor]
-        image_sizes = [image.size for image in imgs]
-
+        
         question = f"\n{query}"
         for _ in imgs:
             question = DEFAULT_IMAGE_TOKEN + question
@@ -76,9 +76,11 @@ class LLavaOneVisionForInferBasic(InferenceEngine):
 
     def infer(self, query=None, imgs=None):
         inputs = self.parse_input(query, imgs)
-
+        input_ids = inputs.pop('input_ids')
+        images = inputs.pop('images')
+        image_sizes = inputs.pop('image_sizes')
         conversation = self.model.generate(
-            **inputs,
+            input_ids, images=images, image_sizes=image_sizes,
             **self.gen_config
         )
         response = self.tokenizer.batch_decode(conversation, skip_special_tokens=True)
