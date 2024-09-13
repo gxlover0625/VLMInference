@@ -20,7 +20,9 @@ Unified Vision-Language Model Inference APIs
 ## :dart: 更新日志
 括号内表示推理框架，transformers代表官网原生代码
 
-[24/09/13] 更新了`Phi-3.5-vision`(transformers)的单样本API。
+[24/09/14] 更新了`LLaVA OneVision`(transformers)的单样本推理API。
+
+[24/09/13] 更新了`Phi-3.5-vision`(transformers)的单样本推理API。
 
 [24/09/12] 更新了`xGen-MM`(transformers)的单样本、批量推理API，只支持图片混合输入。
 
@@ -62,7 +64,7 @@ modelscope download --model=model_name --local_dir local_dir
 | [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) | Transformers | Qwen2VLForInferBasic | [Qwen2-VL](https://github.com/QwenLM/Qwen2-VL?tab=readme-ov-file#quickstart) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5) | Transformers | XGenMMForInferBasic | [xGen-MM](https://huggingface.co/Salesforce/xgen-mm-phi3-mini-instruct-interleave-r-v1.5#troubleshoot) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | :x:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片<br> :white_check_mark:混合输 |
 | [Phi-3.5-Vision](https://huggingface.co/microsoft/Phi-3.5-vision-instruct) | Transformers | PhiVForInferBasic | [Phi-3.5-Vision](https://huggingface.co/microsoft/Phi-3.5-vision-instruct#requirements) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | / |
-| [LLaVA OneVision](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov) | Transformers | LLavaOneVisionForInferBasic | [LLaVA OneVision](https://github.com/LLaVA-VL/LLaVA-NeXT?tab=readme-ov-file#2-install-the-inference-package) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | / |
+| [LLaVA OneVision](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov) | Transformers | LLavaOneVision<br>ForInferBasic | [LLaVA OneVision](https://github.com/LLaVA-VL/LLaVA-NeXT?tab=readme-ov-file#2-install-the-inference-package) | :white_check_mark:纯文本<br> :white_check_mark:单图片<br> :white_check_mark:多图片 | / |
 
 ## 硬件要求
 本项目优先支持24G以上的显卡，如3090、V100、A100等，其中V100不支持flash-attention 2，建议CUDA版本大于等于11.8。
