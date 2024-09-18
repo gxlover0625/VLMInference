@@ -10,6 +10,7 @@ from easydict import EasyDict
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+# 批处理
 def collate_fn(batch):
     id_list = [item['id'] for item in batch]
     query_list = [item['query'] for item in batch]
@@ -17,7 +18,7 @@ def collate_fn(batch):
     return id_list, query_list, imgs_list
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_name', type=str, default="InternVL2-8B", help='The name of the model.')
+parser.add_argument('--model_name', type=str, default="InternVL2", help='The name of the model.')
 parser.add_argument('--model_path', type=str, default="OpenGVLab/InternVL2-8B", help='The local directory or the repository id of the model.')
 parser.add_argument('--batch_size', type=int, default=8, help='The batch size.')
 parser.add_argument('--input_file', type=str, default=None, help='The path of the input file.')
@@ -35,6 +36,8 @@ with open(config.input_file, 'r') as f:
         cur_json = json.loads(line.strip())
         if "imgs" not in cur_json.keys():
             cur_json["imgs"] = None
+        elif cur_json["imgs"] is None:
+            pass
         elif len(cur_json["imgs"]) == 0:
             cur_json["imgs"] = None
         dataset.append(cur_json)
@@ -44,12 +47,12 @@ print("***************Data Loading Done*****************","\n")
 
 # 加载模型
 print("***************Model Loading Start***************")
-if config.model_name != "InternVL2-8B":
-    raise NotImplementedError("Only InternVL2-8B is supported now.")
-else:
+if config.model_name == "InternVL2":
     os.environ['MODEL_ENV'] = 'internvl2'
-    from vlminference.models import InternVL2ForInfer
-infer_engine = InternVL2ForInfer(config.model_path)
+    from vlminference.models import InternVL2ForInfer as ModelForInfer
+else:
+    raise NotImplementedError(f"The model {config.model_name} is not implemented.")
+infer_engine = ModelForInfer(config.model_path)
 print(f"[Model]>>> {config.model_name} for inference.")
 print("***************Model Loading Done****************","\n")
 
