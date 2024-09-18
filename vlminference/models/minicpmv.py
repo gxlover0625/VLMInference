@@ -7,7 +7,7 @@ class MiniCPMVForInfer(InferenceEngine):
     def __init__(self, model_path = None, context_max_len = 2048, max_new_tokens = 512, top_p = 1.0, top_k = -1, temperature = 0, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-        self.model = LLM(model=model_path, trust_remote_code=True, gpu_memory_utilization=1, max_model_len=context_max_len, limit_mm_per_prompt={"image": 5})
+        self.model = LLM(model=model_path, trust_remote_code=True, gpu_memory_utilization=0.8, max_model_len=context_max_len, limit_mm_per_prompt={"image": 5})
         
         stop_tokens = ['<|im_end|>', '<|endoftext|>']
         stop_token_ids = [self.tokenizer.convert_tokens_to_ids(i) for i in stop_tokens]
