@@ -50,6 +50,12 @@ print("***************Model Loading Start***************")
 if config.model_name == "InternVL2":
     os.environ['MODEL_ENV'] = 'internvl2'
     from vlminference.models import InternVL2ForInfer as ModelForInfer
+elif config.model_name == "Qwen2VL":
+    os.environ['MODEL_ENV'] = 'qwen2vl'
+    from vlminference.models import Qwen2VLForInferBasic as ModelForInfer
+elif config.model_name == "minicpmv":
+    os.environ['MODEL_ENV'] = 'minicpmv'
+    from vlminference.models import MiniCPMVForInfer as ModelForInfer
 else:
     raise NotImplementedError(f"The model {config.model_name} is not implemented.")
 infer_engine = ModelForInfer(config.model_path)
