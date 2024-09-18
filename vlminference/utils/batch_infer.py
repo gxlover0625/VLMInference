@@ -53,7 +53,7 @@ if config.model_name == "InternVL2":
 elif config.model_name == "Qwen2VL":
     os.environ['MODEL_ENV'] = 'qwen2vl'
     from vlminference.models import Qwen2VLForInferBasic as ModelForInfer
-elif config.model_name == "minicpmv":
+elif config.model_name == "MiniCPMV":
     os.environ['MODEL_ENV'] = 'minicpmv'
     from vlminference.models import MiniCPMVForInfer as ModelForInfer
 else:

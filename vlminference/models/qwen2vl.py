@@ -31,11 +31,12 @@ class Qwen2VLForInferBasic(InferenceEngine):
         #     self.model = Qwen2VLForConditionalGeneration.from_pretrained(
         #         model_path, torch_dtype="auto", device_map="auto"
         #     )
-
+        min_pixels = 256*28*28
+        max_pixels = 1280*28*28
         self.model = Qwen2VLForConditionalGeneration.from_pretrained(
             model_path, torch_dtype=self.torch_dtype, device_map="auto"
         )
-        self.processor = AutoProcessor.from_pretrained(model_path)
+        self.processor = AutoProcessor.from_pretrained(model_path, min_pixels=min_pixels, max_pixels=max_pixels)
         
         self.gen_config = {
             "do_sample": True,
