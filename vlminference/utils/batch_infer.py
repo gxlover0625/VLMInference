@@ -56,6 +56,9 @@ elif config.model_name == "Qwen2VL":
 elif config.model_name == "MiniCPMV":
     os.environ['MODEL_ENV'] = 'minicpmv'
     from vlminference.models import MiniCPMVForInfer as ModelForInfer
+elif config.model_name == "LLaVA OneVision":
+    os.environ['MODEL_ENV'] = 'llava_onevision'
+    from vlminference.models import LLavaOneVisionForInferBasic as ModelForInfer
 else:
     raise NotImplementedError(f"The model {config.model_name} is not implemented.")
 infer_engine = ModelForInfer(config.model_path)

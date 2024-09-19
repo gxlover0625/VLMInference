@@ -15,7 +15,7 @@ from llava.conversation import conv_templates, SeparatorStyle
 from ..inference import InferenceEngine
 
 class LLavaOneVisionForInferBasic(InferenceEngine):
-    def __init__(self, model_path = None, model_name = "llava_qwen", load_bits = 8, max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
+    def __init__(self, model_path = None, model_name = "llava_qwen", load_bits = 16, max_new_tokens = 512, top_p = 1.0, top_k = 1, temperature = 0.8, repetition_penalty = 1.0):
         assert model_path is not None, "Please provide model path"
         self.model_path = model_path
         if load_bits == 8:
